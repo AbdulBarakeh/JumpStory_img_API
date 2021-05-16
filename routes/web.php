@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\FilesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +23,7 @@ Route::get('/', [PagesController::class,'index']);
 // });
 
 Route::get('/about', [PagesController::class,'about']);
+Route::get('/upload', [PagesController::class,'upload']);
+
+Route::post('/file/upload', [FilesController::class,'upload'])->name('file.upload');
+// Route::post('file/upload', 'FileController@store')->name('file.upload');

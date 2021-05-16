@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 class PagesController extends Controller
 {
     public function index(){
+        $path = $_SERVER['DOCUMENT_ROOT'].'/jumpstory_img_api';
                 /* Create the object */
-        $im = new \Imagick("/resources/testImg.jpg");
+        $im = new \Imagick($path.'/testImg.jpg');
 
         /* Get the EXIF information */
         $exifArray = $im->getImageProperties("exif:*");
@@ -18,6 +19,7 @@ class PagesController extends Controller
         // {
         //     echo "{$name} => {$property}<br />\n"; 
         // }
+
         $data = array(
             'exifArray' => $exifArray,
             'title'=>'Index view'
@@ -32,7 +34,14 @@ class PagesController extends Controller
         return view('pages.about')->with($data);
 
     }
-    // public function welcome(){
-    //     return view('welcome');
-    // }
+    public function upload(){
+        $path = $_SERVER['DOCUMENT_ROOT'].'/jumpstory_img_api';
+        $data = array(
+            'title'=>'Upload Image view',
+            'path' => $path
+        );
+        return view('pages.upload')->with($data);
+
+    }
+
 }

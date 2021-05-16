@@ -14,6 +14,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/jumpstory_img_api/public/about">About</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/jumpstory_img_api/public/upload">Upload</a>
+          </li>
         </ul>
       </div>
     </div>
