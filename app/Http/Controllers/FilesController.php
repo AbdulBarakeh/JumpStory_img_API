@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\PagesController;
 class FilesController extends Controller
 {
     public function upload(Request $request){
-        // dd($request->all());
+
         $path = $_SERVER['DOCUMENT_ROOT'].'/jumpstory_img_api';
         if (isset($_POST['submit'])) {
             $file = $_FILES['file'];
@@ -38,8 +38,14 @@ class FilesController extends Controller
                 echo 'File type is incompatible!';
             }
         }
-    // return "Form data here!";
-        // return $request->input();
-    return redirect('/');
+
+        return redirect('/');
+    }
+
+    public function loadImageDetails(Request $request){
+        // $path = $_SERVER['DOCUMENT_ROOT'].'/jumpstory_img_api';
+        // $imageno = $request['imgpick'];
+        // $controller = new PagesController();
+        // $controller.indexWithData($imageno);
     }
 }

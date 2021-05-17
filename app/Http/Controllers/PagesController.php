@@ -8,24 +8,26 @@ class PagesController extends Controller
 {
     public function index(){
         $path = $_SERVER['DOCUMENT_ROOT'].'/jumpstory_img_api';
-                /* Create the object */
-        $im = new \Imagick($path.'/testImg.jpg');
-
+        $imagesdir = $path.'/uploads';
+        $images = array();
+        foreach(glob($imagesdir.'/*.*') as $file) {
+            array_push($images,$file);
+        }
+        
+        //get data from dummy image        
+        $im = new \Imagick($imagesdir.'/testImg.jpg');
         /* Get the EXIF information */
-        $exifArray = $im->getImageProperties("exif:*");
+        $exifArray = $im->getImageProperties();
 
-        // /* Loop trough the EXIF properties */
-        // foreach ($exifArray as $name => $property)
-        // {
-        //     echo "{$name} => {$property}<br />\n"; 
-        // }
 
         $data = array(
             'exifArray' => $exifArray,
-            'title'=>'Index view'
+            'title'=>'Index view',
+            'images' => $images
         );
         return view('pages.index')->with($data);
     }
+    
     public function about(){
         $data = array(
             'title'=>'About view',

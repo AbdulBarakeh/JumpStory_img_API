@@ -15,16 +15,8 @@ use App\Http\Controllers\FilesController;
 */
 
 Route::get('/', [PagesController::class,'index']);
-
-// Route::get('/index', [PagesController::class,'index']);
-
-// Route::get('/index', function () {
-//     return view('pages.index');
-// });
-
 Route::get('/about', [PagesController::class,'about']);
 Route::get('/upload', [PagesController::class,'upload']);
 
-Route::post('fileupload', [FilesController::class,'upload'])->name('file.upload');
-
-// Route::post('file/upload', 'FileController@store')->name('file.upload');
+Route::post('getimagedetail',[FilesController::class,'loadImageDetails']);
+Route::post('fileupload', [FilesController::class,'upload']);
