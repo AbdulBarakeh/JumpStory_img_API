@@ -19,12 +19,13 @@ class FilesController extends Controller
             $fileType = $file['type'];
 
             $fileNameArray = explode('.',$fileName);//seperate name and extenstion
-            $fileExtension = strtolower(end($fileNameArray));//make file extenstion to lower case to check
-            $allowedFiletypes = array('jpg', 'jpeg', 'png');
+            $fileNameNoExtenstion = reset($fileNameArray);
+            $fileExtension = strtolower(end($fileNameArray));
+            $allowedFiletypes = array('jpg', 'jpeg');
             if (in_array($fileExtension, $allowedFiletypes)) {
                 if($fileError === 0){ // 0 means no errors occured
                     if ($fileSize < 200000) {// don't upload anything larger than 200MB
-                        $fileNameUniqe = uniqid('',true).'.'.$fileExtension; // creates UI based on current us from epoc. Add extension to new filename.
+                        $fileNameUniqe = $fileNameNoExtenstion.uniqid('',true).'.'.$fileExtension; // creates UID based on current us from epoc. Add extension to new filename.
                         $fileDestination = $path.'/uploads/'.$fileNameUniqe;
                         echo $fileDestination;
                         move_uploaded_file($fileTmpName,$fileDestination);// upload file
@@ -43,9 +44,23 @@ class FilesController extends Controller
     }
 
     public function loadImageDetails(Request $request){
-        // $path = $_SERVER['DOCUMENT_ROOT'].'/jumpstory_img_api';
-        // $imageno = $request['imgpick'];
-        // $controller = new PagesController();
-        // $controller.indexWithData($imageno);
+        $filePath;
+
+        if(isset($_POST['imgpick'])) 
+        {
+            $filePath = $_POST['imgpick'];
+        }
+
+        //Instantiate Imagick object with filepath
+        $im = new \Imagick($filePath);
+        // Get the EXIF information
+        $exifArray = $im->getImageProperties();
+
+        $data = array(
+            'exifArray' => $exifArray,
+            'title'=>'Detail view'
+        );
+        return view('pages.detail')->with($data);
+
     }
 }
